@@ -1,0 +1,92 @@
+<br><br>
+  <div class="row">
+    <div class="container col-md-6">
+      <div class="jumbotron py-3 fundoJumb">
+        <h1 class="display-4 text-center TextJumb">Cursos</h1>
+      </div>
+      <form novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+        <input type="hidden" name="cursoId" [value]="service.formData.cursoId" />
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Descrição*</label>
+            <input class="form-control form-control-lg" placeholder="Descrição do Curso" name="descricao"
+               type="text" title="descricao" id="descricao" #descricao="ngModel"
+              [(ngModel)]="service.formData.descricao" required [class.invalid]="descricao.invalid && descricao.touched">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Data Inicial*</label>
+            <input class="form-control form-control-lg" placeholder="DD/MM/AAAA" name="dtInicio" type="date"
+               #dtInicio="ngModel" [(ngModel)]="service.formData.dtInicio" required
+              [class.invalid]="dtInicio.invalid && dtInicio.touched">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Data Final*</label>
+            <input class="form-control form-control-lg" placeholder="DD/MM/AAAA" name="dtFim" type="date"
+               #dtTermino="ngModel" [(ngModel)]="service.formData.dtTermino"
+              [class.invalid]="dtTermino.invalid && dtTermino.touched">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Quantidade de Alunos</label>
+            <input class="form-control form-control-lg" placeholder="Nº Alunos" name="qtdAlunos" type="number"
+              #qtdAlunos="ngModel" [(ngModel)]="service.formData.qtdAlunos"
+              [class.invalid]="qtdAlunos.invalid && qtdAlunos.touched">
+          </div>
+
+<!--           <div class="form-group col-md-6">
+            <input class="form-control form-control-lg" name="categoriaFk" type="hidden"
+              #categoriaFk="ngModel" [(ngModel)]="service.formData.categoriaFk" required
+              [class.invalid]="categoriaFk.invalid && categoriaFk.touched">
+          </div> -->
+
+          <div class="form-group col-md-5">
+            <label for="tipo">Categoria*: </label>
+            <select  class="form-control form-control-lg" aria-label="Default select example"
+              (click)="getCategoriaId()" id="cmbTipo" name="categoria" type="text" required #categoria="ngModel"
+              [(ngModel)]="service.formData.categoriaFk" [class.invalid]="categoria.invalid && categoria.touched">
+              <option selected>Selecione um tipo</option>
+              <option *ngFor="let ct of serviceCategoria.listCategoria" value="{{ct.categoriaId}}">
+                {{ct.categoria}}
+              </option>
+            </select>
+          </div>
+
+        </div>
+        <div  class="form-group col-md-12">
+          <button class="btn btn-outline-danger btn-lg btn-block" type="submit"
+            [disabled]="form.invalid">Salvar</button>
+        </div>
+      </form>
+    </div>
+
+ <div class="container col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>descricao</th>
+          <th>Data Inicio</th>
+          <th>Data de Encerramento</th>
+          <th>Qtd Alunos</th>
+          <th>Categoria</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cr of service.list">
+          <td (click)="populateForm(cr)">{{cr.cursoId}}</td>
+          <td (click)="populateForm(cr)">{{cr.descricao}}</td>
+          <td (click)="populateForm(cr)">{{cr.dtInicio}}</td>
+          <td (click)="populateForm(cr)">{{cr.dtTermino}}</td>
+          <td (click)="populateForm(cr)">{{cr.qtdAlunos}}</td>
+          <div *ngFor="let ct of serviceCategoria.listCategoria">
+          <td *ngIf="cr.categoriaFk == ct.categoriaId" (click)="populateForm(cr)">{{ct.categoria}}</td>
+          </div>
+          <td>
+            <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(cr.cursoId)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
