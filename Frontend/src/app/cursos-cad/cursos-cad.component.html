@@ -67,35 +67,36 @@
     </div>
 
     <div class="container col-md-6">
-      <div>
+      <div class="container">
         <form class="d-flex">
           <input (change)="pesquisar()" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="pesquisa">
-          <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+          <button (click)="pesquisar()" class="btn btn-outline-success" type="submit">Pesquisar</button>
         </form>
+        <br>
       </div>
         <table class="table">
-          <thead>
+          <thead style="background-color: rgb(46, 46, 46)">
             <tr>
-              <th>ID</th>
-              <th>descricao</th>
-              <th>Data Inicio</th>
-              <th>Data de Encerramento</th>
-              <th>Qtd Alunos</th>
-              <th>Categoria</th>
-              <th></th>
+              <th style="border-color: rgb(46, 46, 46)">ID</th>
+              <th style="border-color: rgb(46, 46, 46)">descricao</th>
+              <th style="border-color: rgb(46, 46, 46)">Data Inicio</th>
+              <th style="border-color: rgb(46, 46, 46)">Data de Encerramento</th>
+              <th style="border-color: rgb(46, 46, 46)">Qtd Alunos</th>
+              <th style="border-color: rgb(46, 46, 46)">Categoria</th>
+              <th style="border-color: rgb(46, 46, 46)"></th>
             </tr>
           </thead>
           <tbody *ngIf="catIdPesquisa == 0 && pesquisa == '' ">
             <tr *ngFor="let cr of service.list">
-              <td (click)="populateForm(cr)">{{cr.cursoId}}</td>
-              <td (click)="populateForm(cr)">{{cr.descricao}}</td>
-              <td (click)="populateForm(cr)">{{cr.dtInicio}}</td>
-              <td (click)="populateForm(cr)">{{cr.dtTermino}}</td>
-              <td (click)="populateForm(cr)">{{cr.qtdAlunos}}</td>
-              <div *ngFor="let ct of serviceCategoria.listCategoria">
-              <td *ngIf="cr.categoriaFk == ct.categoriaId" (click)="populateForm(cr)">{{ct.categoria}}</td>
+              <td style="border-color: rgb(46, 46, 46)" (click)="populateForm(cr)">{{cr.cursoId}}</td>
+              <td style="border-color: rgb(46, 46, 46)" (click)="populateForm(cr)">{{cr.descricao}}</td>
+              <td style="border-color: rgb(46, 46, 46)" (click)="populateForm(cr)">{{cr.dtInicio}}</td>
+              <td style="border-color: rgb(46, 46, 46)" (click)="populateForm(cr)">{{cr.dtTermino}}</td>
+              <td style="border-color: rgb(46, 46, 46)" (click)="populateForm(cr)">{{cr.qtdAlunos}}</td>
+              <div style="border-color: rgb(46, 46, 46)" *ngFor="let ct of serviceCategoria.listCategoria">
+              <td style="border-color: rgb(46, 46, 46)" *ngIf="cr.categoriaFk == ct.categoriaId" (click)="populateForm(cr)">{{ct.categoria}}</td>
               </div>
-              <td>
+              <td style="border-color: rgb(46, 46, 46)">
                 <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(cr.cursoId)"></i>
               </td>
             </tr>

@@ -100,12 +100,14 @@ export class CursosCadComponent implements OnInit {
      if(this.service.formData.dtInicio == datas[i].dtInicio)
      {
       this.toastr.error("Existe(m) curso(s) planejados(s) dentro do período informado.")
+      this.service.formData.dtInicio = " "
      }
    }
    for(let i=0;i < datas.length;i++){
     if(this.service.formData.dtTermino == datas[i].dtTermino)
     {
       this.toastr.error("Existe(m) curso(s) planejados(s) dentro do período informado.")
+      this.service.formData.dtTermino = " "
     }
   }
   }
