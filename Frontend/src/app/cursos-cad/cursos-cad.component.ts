@@ -7,6 +7,7 @@ import { Categoria } from 'src/app/shared/categoria.model';
 import { CategoriaService } from 'src/app/shared/categoria.service';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-cursos-cad',
   templateUrl: './cursos-cad.component.html',
@@ -26,21 +27,137 @@ export class CursosCadComponent implements OnInit {
     this.service.formData = Object.assign({}, selectedRecord);
   }
 
+/* ---------------------------------------------- */
+
   getCategoriaId(){
     let cmbTipo = (<HTMLSelectElement>document.getElementById("cmbTipo")).value;
     this.service.formData.categoriaFk = Number(cmbTipo);
+
+    if(this.service.formData.categoriaFk == 0)
+    {
+      (<HTMLLabelElement>document.getElementById("erro4")).textContent = 'Campo Precisa ser preenchido!';
+    }
+  }
+  apagaLabelCategoria(){
+    (<HTMLLabelElement>document.getElementById("erro4")).textContent = ''
+  }
+/* ---------------------------------------------- */
+
+  validaDescricao(){
+    if(this.service.formData.descricao == '')
+    {
+      (<HTMLLabelElement>document.getElementById("erro")).textContent = 'Campo Precisa ser preenchido!';
+    }
+  }
+  apagaLabelDescricao(){
+    (<HTMLLabelElement>document.getElementById("erro")).textContent = ''
   }
 
+/* ---------------------------------------------- */
+  validaDtInicio(){
+    if(this.service.formData.dtInicio == '')
+    {
+      (<HTMLLabelElement>document.getElementById("erro2")).textContent = 'Campo Precisa ser preenchido!';
+    }
+  }
+/* ---------------------------------------------- */
+  validaDtTermino(){
+    if(this.service.formData.dtTermino == '')
+    {
+      (<HTMLLabelElement>document.getElementById("erro3")).textContent = 'Campo Precisa ser preenchido!';
+    }
+  }
+/* ---------------------------------------------- */
+  comparaData(){
+    (<HTMLLabelElement>document.getElementById("erro2")).textContent = '';
+    (<HTMLLabelElement>document.getElementById("erro3")).textContent = '';
+
+      var data_1 = new Date(this.service.formData.dtInicio);
+      console.log(data_1);
+
+      var data_2 = new Date(this.service.formData.dtTermino);
+      console.log(data_2);
+
+      var dataAgora = new Date();
+      dataAgora.setDate(dataAgora.getDate() - 1);
+      console.log(dataAgora)
+      /* console.log(dataAgora); */
+
+      if (data_1 > data_2) {
+        this.toastr.error("Data Inicial não pode ser maior/igual que a Data final","TEM ERRO ÁI NA DATA");
+        this.service.formData.dtInicio = " "
+        this.service.formData.dtTermino = " "
+     }
+     if (data_1 < dataAgora || data_2 < dataAgora) {
+      this.toastr.error("As Datas não podem estar marcadas no Passado","VIAJANTE NO TEMPO?");
+      this.service.formData.dtInicio = " "
+      this.service.formData.dtTermino = " "
+   }
+
+   let datas
+   datas = this.service.list
+   for(let i=0;i < datas.length;i++){
+     if(this.service.formData.dtInicio == datas[i].dtInicio)
+     {
+      this.toastr.error("Existe(m) curso(s) planejados(s) dentro do período informado.")
+     }
+   }
+   for(let i=0;i < datas.length;i++){
+    if(this.service.formData.dtTermino == datas[i].dtTermino)
+    {
+      this.toastr.error("Existe(m) curso(s) planejados(s) dentro do período informado.")
+    }
+  }
+  }
+/* ---------------------------------------------- */
+
   onDelete(id: number) {
-    if (confirm('Tem Certeza que Deseja Deletar esse Curso?')) {
-      this.service.deleteCurso(id)
-        .subscribe(
-          res => {
-            this.service.refreshList();
-            this.toastr.error("Deletado com Sucesso", 'Curso');
-          },
-          err => { console.log(err) }
-        )
+    let dataDelete
+    dataDelete = this.service.list
+    var dataAgora = new Date();
+    /* dataAgora.setHours(dataAgora.getHours() + 10); */ /* --->>> Para Testar Na apresentação <<<------- */
+    var data_fim = new Date();
+
+    for(let i=0;i < dataDelete.length;i++){
+      if(dataDelete[i].cursoId == id){
+        data_fim = new Date(dataDelete[i].dtTermino);
+        data_fim.setDate(data_fim.getDate() + 1);
+        console.log(data_fim);
+        console.log(dataAgora)
+      }
+    }
+
+    if(dataAgora>=data_fim){
+      this.toastr.error("O Curso Já Foi Realizado, portanto impossível excluir", 'Curso');
+    }
+     else{
+      if (confirm('Tem Certeza que Deseja Deletar esse Curso?')) {
+        this.service.deleteCurso(id)
+          .subscribe(
+            res => {
+              this.service.refreshList();
+              this.toastr.error("Deletado com Sucesso", 'Curso');
+            },
+            err => { console.log(err) }
+          )
+      }
+     }
+  }
+  /* ----------------------------- */
+   pesquisa : string = '';
+   catIdPesquisa: number = 0;
+  pesquisar(){
+    this.pesquisa = (<HTMLInputElement>document.getElementById("pesquisa")).value;
+    let categoria = this.serviceCategoria.listCategoria;
+
+    for(let i=0;i < categoria.length;i++){
+      let compara = categoria[i].categoria;
+      if(compara.toLocaleLowerCase() == this.pesquisa.toLocaleLowerCase()){
+        this.catIdPesquisa = Number(categoria[i].categoriaId)
+      }
+      else if (this.pesquisa == ''){
+        this.catIdPesquisa = 0;
+      }
     }
   }
 
