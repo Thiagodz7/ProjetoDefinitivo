@@ -1,0 +1,51 @@
+<hr>
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-md-6">
+<form novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+  <input type="hidden" name="usuarioId" [value]="serviceUsuario.formUsuario.usuarioId" />
+    <div class="form-group col-md-12">
+      <label>Nome Usuário*</label>
+      <input class="form-control form-control-lg" placeholder="Nome de Usuário" name="usuario"
+         type="text" id="usuario" name="usuario" title="usuario" #usuario="ngModel"
+        [(ngModel)]="serviceUsuario.formUsuario.usuario" [class.invalid]="usuario.invalid && usuario.touched">
+      </div>
+
+    <div class="form-group col-md-12">
+      <label>Senha*</label>
+      <input class="form-control form-control-lg" placeholder="Senha" name="senha"
+         type="password" title="senha" id="senha" #senha="ngModel" [(ngModel)]="serviceUsuario.formUsuario.senha" [class.invalid]="senha.invalid && senha.touched">
+        <label style="color: red;" id="erro2"></label>
+    </div>
+      <div  class="form-group col-md-12">
+        <button class="btn btn-outline-danger btn-lg btn-block" type="submit"
+          [disabled]="form.invalid">Alterar</button>
+      </div>
+</form>
+</div>
+<div class="col-3"></div>
+</div>
+<hr>
+<div class="jumbotron py-3 fundoJumb">
+  <h1 class="display-4 text-center TextJumb">Logs</h1>
+</div>
+
+  <table class="table">
+    <thead style="background-color: rgb(46, 46, 46)">
+      <tr>
+        <th style="border-color: rgb(46, 46, 46)">ID</th>
+        <th style="border-color: rgb(46, 46, 46)">Data de Inclusão</th>
+        <th style="border-color: rgb(46, 46, 46)">Ação</th>
+        <th style="border-color: rgb(46, 46, 46)">Usuario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lg of serviceLog.listLog">
+        <td style="border-color: rgb(46, 46, 46)" >{{lg.logId}}</td>
+        <td style="border-color: rgb(46, 46, 46)" >{{lg.dtInclusao}}</td>
+        <td style="border-color: rgb(46, 46, 46)" >{{lg.acao}}</td>
+        <td style="border-color: rgb(46, 46, 46)" >{{lg.usuario}}</td>
+      </tr>
+    </tbody>
+  </table>
+

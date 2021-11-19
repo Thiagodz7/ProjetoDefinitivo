@@ -43,6 +43,7 @@ export class AppComponent implements OnInit{
           this.toastr.success('AEEEE, Tu  conseguiu!', 'Usuário Logado')
           this.nome = (<HTMLLabelElement>document.getElementById("nome")).textContent;
           this.serviceLog.nome = this.user;
+          this.serviceUsuario.formUsuario.usuarioId = login[i].usuarioId;
         }
         else{
           this.mostraNav = false;

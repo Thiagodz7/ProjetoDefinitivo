@@ -32,8 +32,8 @@
       <nav class="nav nav-masthead justify-content-center float-md-end">
         <a class="nav-link" aria-current="page" routerLink="home">Home</a>
         <a *ngIf="this.mostraNav == true" class="nav-link" routerLink="cursos">Cursos</a>
-       <a *ngIf="this.mostraNav == false" class="nav-link" routerLink="Cadastre-se">Cadastra-se</a>
-       <a *ngIf="this.mostraNav == true"  class="nav-link" aria-current="page">Olá {{this.user}}</a>
+       <a *ngIf="this.mostraNav == false" class="nav-link" routerLink="cadastrar">Cadastre-se</a>
+       <a *ngIf="this.mostraNav == true"  class="nav-link" routerLink="log">Administrador {{this.user}}</a>
       </nav>
     </div>
   </header>

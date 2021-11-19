@@ -9,13 +9,17 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CursosCadComponent } from './cursos-cad/cursos-cad.component';
 import { HomeComponent } from './home/home.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { CadastrarComponent } from './cadastrar/cadastrar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CursosCadComponent,
-    HomeComponent
+    HomeComponent,
+    PerfilComponent,
+    CadastrarComponent
   ],
   imports: [
     BrowserModule,
