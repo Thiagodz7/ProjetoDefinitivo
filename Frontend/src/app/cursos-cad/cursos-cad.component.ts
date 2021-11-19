@@ -6,7 +6,9 @@ import { CursoService } from 'src/app/shared/curso.service';
 import { Categoria } from 'src/app/shared/categoria.model';
 import { CategoriaService } from 'src/app/shared/categoria.service';
 import { FormsModule } from '@angular/forms';
-
+import { Log } from '../shared/log.model';
+import { LogService } from '../shared/log.service';
+import { UsuarioService } from '../shared/login/usuario.service';
 
 @Component({
   selector: 'app-cursos-cad',
@@ -15,12 +17,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class CursosCadComponent implements OnInit {
 
-  constructor(public service: CursoService , public serviceCategoria: CategoriaService,
-    private toastr: ToastrService) { }
+  constructor(public service: CursoService , public serviceCategoria: CategoriaService,public serviceLog: LogService,
+    private toastr: ToastrService, public serviceUsuario: UsuarioService) { }
 
   ngOnInit(): void {
     this.service.refreshList();
     this.serviceCategoria.refreshList();
+    this.serviceLog.refreshList();
   }
 
   populateForm(selectedRecord: Curso) {
@@ -117,8 +120,14 @@ export class CursosCadComponent implements OnInit {
     let dataDelete
     dataDelete = this.service.list
     var dataAgora = new Date();
-    /* dataAgora.setHours(dataAgora.getHours() + 10); */ /* --->>> Para Testar Na apresentação <<<------- */
+     /* dataAgora.setHours(dataAgora.getHours() + 10); */  /* --->>> Para Testar Na apresentação <<<------- */
     var data_fim = new Date();
+
+    //Inserção de Logs Cadastro
+    let inclusao = new Date();
+    this.serviceLog.formLog.dtInclusao = inclusao.toDateString() + " " + inclusao.toTimeString();
+    this.serviceLog.formLog.acao = "Deletou";
+    this.serviceLog.formLog.usuario = this.serviceLog.nome
 
     for(let i=0;i < dataDelete.length;i++){
       if(dataDelete[i].cursoId == id){
@@ -132,7 +141,7 @@ export class CursosCadComponent implements OnInit {
     if(dataAgora>=data_fim){
       this.toastr.error("O Curso Já Foi Realizado, portanto impossível excluir", 'Curso');
     }
-     else{
+   else{
       if (confirm('Tem Certeza que Deseja Deletar esse Curso?')) {
         this.service.deleteCurso(id)
           .subscribe(
@@ -142,6 +151,15 @@ export class CursosCadComponent implements OnInit {
             },
             err => { console.log(err) }
           )
+
+        //Comando de Log para inserir no Banco
+        this.serviceLog.postLog().subscribe(
+           res => {
+             this.serviceLog.refreshList();
+             /* this.toastr.success('EFETUADO', 'Log') */
+           },
+            err => { console.log(err); }
+          );
       }
      }
   }
@@ -165,9 +183,25 @@ export class CursosCadComponent implements OnInit {
 
 onSubmit(form: NgForm) {
   if (this.service.formData.cursoId == 0)
+  {
+    //Inserção de Logs Cadastro
+    let inclusao = new Date();
+    this.serviceLog.formLog.dtInclusao = inclusao.toDateString() + " " + inclusao.toTimeString();
+    this.serviceLog.formLog.acao = "Cadastrou";
+    this.serviceLog.formLog.usuario = this.serviceLog.nome
+    //------------------------------
     this.insertRecord(form);
+  }
   else
+  {
+    //Inserção de Logs Edição
+    let inclusao = new Date();
+    this.serviceLog.formLog.dtInclusao = inclusao.toDateString() + " " + inclusao.toTimeString();
+    this.serviceLog.formLog.acao = "Editou";
+    this.serviceLog.formLog.usuario = this.serviceLog.nome
+    //------------------------------
     this.updateRecord(form);
+  }
 }
 
 insertRecord(form: NgForm) {
@@ -175,7 +209,17 @@ insertRecord(form: NgForm) {
     res => {
       this.resetForm(form);
       this.service.refreshList();
-      this.toastr.success('Registrado com Sucesso!', 'Curso')
+      /* this.toastr.success('EFETUADO', 'Log') */
+    },
+    err => { console.log(err); }
+  );
+
+   //Comando de Log para inserir no Banco
+   this.serviceLog.postLog().subscribe(
+    res => {
+      this.resetForm(form);
+      this.serviceLog.refreshList();
+      /* this.toastr.success('EFETUADO', 'Log') */
     },
     err => { console.log(err); }
   );
@@ -190,11 +234,26 @@ updateRecord(form: NgForm) {
     },
     err => { console.log(err); }
   );
+
+     //Comando de Log para inserir no Banco
+     this.serviceLog.postLog().subscribe(
+      res => {
+        this.resetForm(form);
+        this.serviceLog.refreshList();
+        this.toastr.success('EFETUADO', 'Log')
+      },
+      err => { console.log(err); }
+    );
 }
 
 resetForm(form: NgForm) {
   form.form.reset();
   this.service.formData = new Curso();
+}
+
+resetFormLog(form: NgForm) {
+  form.form.reset();
+  this.serviceLog.formLog = new Log();
 }
 
 }
