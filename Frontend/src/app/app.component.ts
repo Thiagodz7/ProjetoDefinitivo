@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
 
     mostraNav : boolean = false;
     ocultaLogin : boolean = false;
-
+    cadastrou : boolean = false;
     user : string;
     senha: string;
     public nome: any;
@@ -36,19 +36,22 @@ export class AppComponent implements OnInit{
       this.senha = (<HTMLInputElement>document.getElementById("senha")).value;
        console.log(this.senha)
 
+
       for(let i=0;i < login.length;i++){
         if(this.user == login[i].usuario && this.senha == login[i].senha){
           this.mostraNav = true;
           this.ocultaLogin = true;
           this.toastr.success('AEEEE, Tu  conseguiu!', 'Usuário Logado')
+
           this.nome = (<HTMLLabelElement>document.getElementById("nome")).textContent;
           this.serviceLog.nome = this.user;
           this.serviceUsuario.formUsuario.usuarioId = login[i].usuarioId;
+          this.cadastrou = true;
         }
-        else{
+        else if(this.user != login[i].usuario && this.senha != login[i].senha && this.cadastrou == false){
           this.mostraNav = false;
           this.ocultaLogin = false;
-          this.toastr.error('Tente Novamente', 'Usuário e/ou Senha Incorreta')
+          /* this.toastr.error('Tente Novamente', 'Usuário e/ou Senha Incorreta') */
         }
       }
     }
