@@ -9,19 +9,11 @@ namespace WebApplication1.Model
     public class Curso
     {
         public int cursoId { get; set; }
-        [Required]
         public string descricao { get; set; }
-
-        [Required]
         public string dtInicio { get; set; }
-
-        [Required]
         public string dtTermino { get; set; }
-
-        
         public int qtdAlunos { get; set; }
-
-        [Required]
         public int categoriaFk { get; set; }
+
     }
 }

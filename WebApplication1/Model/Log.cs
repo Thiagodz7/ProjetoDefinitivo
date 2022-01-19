@@ -10,6 +10,6 @@ namespace WebApplication1.Model
         public int logId { get; set; }
         public string dtInclusao { get; set; }
         public string acao { get; set; }
-        public string usuario { get; set; }
+        public int usuarioFk { get; set; }
     }
 }

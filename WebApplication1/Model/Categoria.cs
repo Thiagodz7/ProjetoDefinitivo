@@ -10,5 +10,6 @@ namespace WebApplication1.Model
         public int categoriaId { get; set; }
         public string categoria { get; set; }
         public string descricao { get; set; }
+
     }
 }

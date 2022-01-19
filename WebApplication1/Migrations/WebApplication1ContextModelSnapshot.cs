@@ -47,15 +47,12 @@ namespace WebApplication1.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("descricao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("dtInicio")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("dtTermino")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("qtdAlunos")
@@ -79,8 +76,8 @@ namespace WebApplication1.Migrations
                     b.Property<string>("dtInclusao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("usuario")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("usuarioFk")
+                        .HasColumnType("int");
 
                     b.HasKey("logId");
 
@@ -95,11 +92,9 @@ namespace WebApplication1.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("senha")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("usuario")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("usuarioId");

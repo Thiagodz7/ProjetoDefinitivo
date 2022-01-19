@@ -9,11 +9,8 @@ namespace WebApplication1.Model
     public class Usuario
     {
         public int usuarioId { get; set; }
-
-        [Required]
         public string usuario { get; set; }
-
-        [Required]
         public string senha { get; set; }
+
     }
 }
