@@ -13,6 +13,7 @@ import {
 export default function cursos(propCursos) {
   const baseUrl = "https://localhost:5001/api/Cursos";
   const [data, setData] = useState([]);
+  
   const cursoPost = async () => {
     delete cursoSelecionado.cursoId;
     await axios
@@ -48,7 +49,6 @@ export default function cursos(propCursos) {
   const abrirFecharModalIncluir = () => {
     setModalIncluir(!modalIncluir);
   };
-
   return (
     <div>
       <div>
@@ -75,8 +75,8 @@ export default function cursos(propCursos) {
         <Cursos></Cursos>
       </div>
 
-      <Modal show={modalIncluir} onHide={modalIncluir}>
-        <Modal.Header closeButton>
+      <Modal show={modalIncluir}>
+        <Modal.Header closeButton={!modalIncluir}>
           <Modal.Title>Cadastre um Curso</Modal.Title>
         </Modal.Header>
 
@@ -88,7 +88,7 @@ export default function cursos(propCursos) {
               name="descricao"
               type="text"
               className="form-control"
-              onChange={handleChange }
+              onChange={handleChange}
             />
             <br />
             <label>Data Inicio: </label>
@@ -97,7 +97,7 @@ export default function cursos(propCursos) {
               name="dtInicio"
               type="date"
               className="form-control" 
-              onChange={handleChange }
+              onChange={handleChange}
             />
             <br />
             <label>Data de Término: </label>
@@ -106,7 +106,7 @@ export default function cursos(propCursos) {
               name="dtTermino"
               type="date"
               className="form-control"
-              onChange={handleChange }
+              onChange={handleChange}
             />
             <br />
             <label>Quantidade de Alunos: </label>
@@ -115,7 +115,7 @@ export default function cursos(propCursos) {
               name="qtdAlunos"
               type="number"
               className="form-control"
-              onChange={handleChange }
+              onChange={handleChange}
             />
             <br />
             <label>Categoria: </label>
@@ -124,7 +124,7 @@ export default function cursos(propCursos) {
               name="categoriaFk"
               type="number"
               className="form-control"
-              onChange={handleChange }
+              onChange={handleChange}
             />
           </div>
         </Modal.Body>
