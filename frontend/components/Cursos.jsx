@@ -42,6 +42,18 @@ export default function Cursos(propCursos){
         });
     };
 
+    const cursoDelete = async () => { 
+      await axios
+        .delete(baseUrl+"/"+cursoSelecionado.cursoId)
+        .then((response) => {
+            setData(data.filter(curso=> curso.cursoId !== response.data));
+            abrirFecharModalDeletar();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     const [cursoSelecionado, setCursoSelecionado] = useState({
       cursoId: "",
       descricao: "",
@@ -66,13 +78,18 @@ export default function Cursos(propCursos){
 
     const selecionarCurso=(curso, opcao)=>{
       setCursoSelecionado(curso);
-      (opcao == 'Editar') &&
-      abrirFecharModalEditar();
+      (opcao == 'Editar') ?
+      abrirFecharModalEditar(): abrirFecharModalDeletar();
     }
 
     const [modalEditar, setModalEditar] = useState(false);
     const abrirFecharModalEditar = () => {
       setModalEditar(!modalEditar);
+    };
+
+    const [modalDeletar, setModalDeletar] = useState(false);
+    const abrirFecharModalDeletar = () => {
+      setModalDeletar(!modalDeletar);
     };
     return (
     <div>
@@ -98,7 +115,7 @@ export default function Cursos(propCursos){
                     <th>{curso.dtTermino}</th>
                     <th>{curso.qtdAlunos}</th>
                     <th>{curso.categoriaFk}</th>
-                    <th><button onClick={()=>selecionarCurso(curso, "Editar")} className="btn-sm btn-success">Editar</button>-<button className="btn-sm btn-danger">Excluir</button></th>
+                    <th><button onClick={()=>selecionarCurso(curso, "Editar")} className="btn-sm btn-success">Editar</button>-<button onClick={()=>selecionarCurso(curso, "Excluir")}  className="btn-sm btn-danger" >Excluir</button></th>
                   </tr>
                 ))}
               </tbody>
@@ -185,6 +202,31 @@ export default function Cursos(propCursos){
             onClick={()=>setModalEditar()}
           >
             Cancelar
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+{/* ------------Modal DELETAR------------------ */}
+      <Modal show={modalDeletar}> 
+        <Modal.Header closeButton={!modalDeletar}>
+          <Modal.Title>Deletando um Curso</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div>
+            Confirma a exclusão deste curso : {cursoSelecionado && cursoSelecionado.descricao}?
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={() => cursoDelete()}>
+            Sim
+          </button>{" "}
+          <button
+            className="btn btn-secondary"
+            onClick={()=>setModalDeletar()}
+          >
+            Não
           </button>
         </Modal.Footer>
       </Modal>

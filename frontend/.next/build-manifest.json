@@ -29,6 +29,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/cursos.js"
+    ],
+    "/usuario": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/usuario.js"
     ]
   },
   "ampFirstPages": []

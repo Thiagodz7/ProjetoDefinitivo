@@ -51,11 +51,12 @@ export default function cursos(propCursos) {
   };
   return (
     <div>
-      <div>
+      <div>{/* Navbar */}
         <Menu></Menu>
       </div>
 
       <div className="container">
+        {/* Cabeça da Pagina */}
         <Row>
           <Col md="2">
             <h1>CURSOS</h1>
@@ -65,17 +66,19 @@ export default function cursos(propCursos) {
               onClick={() => abrirFecharModalIncluir()}
               className="btn btn-warning"
             >
-              Ver Cursos
+              Cadastrar Curso
             </button>
           </Col>
         </Row>
       </div>
 
       <div>
+        {/* Tabela Cursos */}
         <Cursos></Cursos>
       </div>
 
       <Modal show={modalIncluir}>
+        {/* Modal para Cadastros */}
         <Modal.Header closeButton={!modalIncluir}>
           <Modal.Title>Cadastre um Curso</Modal.Title>
         </Modal.Header>

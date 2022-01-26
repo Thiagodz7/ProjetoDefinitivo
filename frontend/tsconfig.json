@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/Menu.tsx", "pages/index.js", "next.config.js", "pages/cursos.jsx", "components/Cursos.jsx"  ],
+, "src/components/Menu.tsx", "pages/index.js", "next.config.js", "pages/cursos.jsx", "components/Cursos.jsx", "pages/usuario.jsx", "pages/api/usuarioAPi.jsx"  ],
   "exclude": [
     "node_modules"
   ]

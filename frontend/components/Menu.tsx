@@ -13,7 +13,7 @@ export default function Menu(propNav) {
       <Nav className="me-auto">
         <Nav.Link href="/home">Home</Nav.Link>
         <Nav.Link href="/cursos">Cursos</Nav.Link>
-        <Nav.Link href="/Perfil">Perfil</Nav.Link>
+        <Nav.Link href="/usuario">Perfil</Nav.Link>
       </Nav>
     </Navbar.Collapse>
   </Container>
