@@ -3,21 +3,19 @@ import { useState, useEffect} from "react";
 import { Modal } from "react-bootstrap";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { cursoApi } from "../pages/api/curso.api";
 
 export default function TabelaCursos(){
     const baseUrl = "https://localhost:5001/api/Cursos";
-    const [data, setData] = useState([]);
+    const [curso, setData] = useState([]);
 
-    const cursoGet = async () => {
-      await axios
-        .get(baseUrl)
-        .then((response) => {
+    function mostrarDados(){
+       cursoApi.lista()
+      .then((response) => {
           setData(response.data);
         })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+  }
+  mostrarDados();
 
     const cursoPut = async () => { 
       await axios
@@ -71,10 +69,6 @@ export default function TabelaCursos(){
       });
       console.log(cursoSelecionado);
     };
-  
-    useEffect(() => {
-      cursoGet();
-    });
 
     const selecionarCurso=(curso, opcao)=>{
       setCursoSelecionado(curso);
@@ -107,7 +101,7 @@ export default function TabelaCursos(){
                 </tr>
               </thead>
               <tbody>
-                {data.map((curso) => (
+                {curso.map((curso) => (
                   <tr key={curso.cursoId}>
                     <th>{curso.cursoId}</th>
                     <th>{curso.descricao}</th>

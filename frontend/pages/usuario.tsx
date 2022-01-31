@@ -1,9 +1,9 @@
 import Menu from "../components/Menu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import { userApi } from "./api/user.api";
+import { userApi } from "./api/usuario.api";
 import { useState } from "react";
-
+import  TabelaUsuario  from "../components/TabelaUsuario"
 export default function Usuario(){
   
   const [usuario, setUsuario] = useState({});
@@ -51,6 +51,7 @@ export default function Usuario(){
           </button>{" "}
         </div>
       </div>
+      <TabelaUsuario/>
     </div>
   );
 }

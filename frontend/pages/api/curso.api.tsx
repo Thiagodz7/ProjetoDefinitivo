@@ -24,7 +24,7 @@ export const cursoApi = {
     return API.get(baseURL, { params: { id: id } });
   },
 
-  async list() {
+  async lista() {
     return API.get(baseURL);
   },
 
