@@ -7,7 +7,7 @@ import { userApi } from "../pages/api/usuario.api";
 export default function TabelaUsuario(){
     const [usuario, setData] = useState([]);
     function mostrarDados(){
-        let lista = userApi.lista()
+        userApi.lista()
         .then((response) => {
             setData(response.data);
           })

@@ -1,5 +1,6 @@
 import { API } from "./base.api";
 
+
 const baseURL = "/Cursos";
 
 export interface Curso{
