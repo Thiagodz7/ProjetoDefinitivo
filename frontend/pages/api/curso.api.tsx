@@ -30,6 +30,6 @@ export const cursoApi = {
   },
 
   async delete(id) {
-    return API.delete(baseURL, { params: { id: id } });
+    return API.delete(`${baseURL}/${id}`);
   },
 };
