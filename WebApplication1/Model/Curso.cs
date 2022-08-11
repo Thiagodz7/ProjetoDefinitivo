@@ -22,6 +22,13 @@ namespace WebApplication1.Model
         public int qtdAlunos { get; set; }
 
         [Required]
-        public int categoriaFk { get; set; }
+        public int categoriaId { get; set; }
+        public Categoria categoria { get; set; }
+
+
+        public void PreencherCategoria(Categoria categoriaRequest)
+        {
+            categoria = categoriaRequest;
+        }
     }
 }

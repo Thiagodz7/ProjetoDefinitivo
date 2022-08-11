@@ -23,9 +23,13 @@ namespace WebApplication1.Controllers
 
         // GET: api/Cursos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Curso>>> GetCurso()
+        public async Task<ActionResult<List<Curso>>> GetCurso()
         {
-            return await _context.Curso.ToListAsync();
+            //Refatoração 
+            var curso = await _context.Curso.Include(x => x.categoria)
+                .ToListAsync();
+
+            return curso;
         }
 
         // GET: api/Cursos/5
@@ -78,6 +82,11 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<ActionResult<Curso>> PostCurso(Curso curso)
         {
+            //Refatoração
+            var categoria = await _context.Categoria.FindAsync(curso.categoriaId);
+            if (categoria.categoriaId == curso.categoriaId)
+                curso.PreencherCategoria(categoria);
+
             _context.Curso.Add(curso);
             await _context.SaveChangesAsync();
 
